@@ -1,8 +1,14 @@
 const http = require('http');
 const host = 'Localhost';
 const port = 3000;
+const stats = require('./pcRamUsage.js')
 
 
 http.createServer((req, res) => {
-    res.end('<h1>Working</h1>')
-}).listen(port, () => console.log(`server is running in ${host}:${port}`));
+    let url = req.url;
+    if (url === '/stats') {
+        res.end(JSON.stringify(stats, null, 2));
+    } else {
+        res.end('<h1>Seja Bem Vindo</h1>')
+    };
+}).listen(port, () => console.log(`server is running in ${host}:${port}, ${stats}`));
